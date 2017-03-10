@@ -55,6 +55,10 @@ public class Itunes {
         this.mp3Url = mp3Url;
     }
 
+    public String getDate(){
+        String str = getPubDate().substring(0,16);
+        return str;
+    }
     @Override
     public String toString() {
         return "Itunes{" +

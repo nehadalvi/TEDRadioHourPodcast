@@ -50,7 +50,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         TextView tv = (TextView) holder.view.findViewById(R.id.tv_title_date);
         ImageView iv = (ImageView) holder.view.findViewById(R.id.iv_image);
-        tv.setText(itunesList.get(position).getTitle()+"\n"+itunesList.get(position).getDescription());
+        tv.setText(itunesList.get(position).getTitle()+"\n"+"Posted: "+itunesList.get(position).getDate());
         Picasso.with(mContext).load(itunesList.get(position).getImgUrl()).into(iv);
     }
 
