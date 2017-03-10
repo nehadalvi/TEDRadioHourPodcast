@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TED Radio Hour Podcast</string>
+    <string name="title_switch">title_switch</string>
 </resources>
