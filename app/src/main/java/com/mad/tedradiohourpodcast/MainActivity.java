@@ -27,10 +27,9 @@ public class MainActivity extends AppCompatActivity implements GetTunesAsync.IGe
     public void getData(ArrayList<Itunes> itunes) {
         Log.d("demo","Arraylist = "+itunes.toString());
         listView = (RecyclerView) findViewById(R.id.list_recycler_view);
-        RecyclerView.Adapter adapter;
+        RecyclerView.Adapter adapter = new ListAdapter(itunes,this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         listView.setLayoutManager(layoutManager);
-
-
+        listView.setAdapter(adapter);
     }
 }
