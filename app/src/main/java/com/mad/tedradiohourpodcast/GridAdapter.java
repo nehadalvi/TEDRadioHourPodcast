@@ -1,15 +1,19 @@
 package com.mad.tedradiohourpodcast;
 
 import android.content.Context;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -19,6 +23,8 @@ import java.util.ArrayList;
 public class GridAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     ArrayList<Itunes> itunesList;
     Context mContext;
+    MediaPlayer mPlayer;
+    boolean flagPlay = true;
 
     public GridAdapter(ArrayList<Itunes> itunesList, Context context) {
         this.itunesList = itunesList;
@@ -47,11 +53,40 @@ public class GridAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ListAdapter.ViewHolder holder, final int position) {
         TextView tv = (TextView) holder.view.findViewById(R.id.tv_title_grid);
         ImageView iv = (ImageView) holder.view.findViewById(R.id.iv_image_grid);
         tv.setText(itunesList.get(position).getTitle());
         Picasso.with(mContext).load(itunesList.get(position).getImgUrl()).into(iv);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(flagPlay) {
+                    mPlayer = new MediaPlayer();
+                    mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    try {
+                        mPlayer.setDataSource(itunesList.get(position).getMp3Url());
+                    } catch (IllegalArgumentException e) {
+                        Toast.makeText(mContext, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+                    } catch (SecurityException e) {
+                        Toast.makeText(mContext, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+                    } catch (IllegalStateException e) {
+                        Toast.makeText(mContext, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        mPlayer.prepare();
+                    } catch (IllegalStateException e) {
+                        Toast.makeText(mContext, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        Toast.makeText(mContext, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+                    }
+                    mPlayer.start();
+                    flagPlay = false;
+                }
+            }
+        });
     }
 
 
