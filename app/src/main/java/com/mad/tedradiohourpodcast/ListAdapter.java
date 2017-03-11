@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -47,11 +48,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         TextView tv = (TextView) holder.view.findViewById(R.id.tv_title_date);
         ImageView iv = (ImageView) holder.view.findViewById(R.id.iv_image);
         tv.setText(itunesList.get(position).getTitle()+"\n"+"Posted: "+itunesList.get(position).getDate());
         Picasso.with(mContext).load(itunesList.get(position).getImgUrl()).into(iv);
+        holder.view.findViewById(R.id.iv_play_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                display(position);
+            }
+        });
     }
 
 
@@ -59,5 +66,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return itunesList.size();
+    }
+    void display(int i){
+        Toast.makeText(mContext,"Play button clicked : "+i, Toast.LENGTH_SHORT).show();
     }
 }
