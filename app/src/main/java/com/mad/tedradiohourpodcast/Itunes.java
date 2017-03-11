@@ -1,10 +1,12 @@
 package com.mad.tedradiohourpodcast;
 
+import java.io.Serializable;
+
 /**
  * Created by neha5 on 09-03-2017.
  */
 
-public class Itunes {
+public class Itunes implements Serializable {
     String title, description, pubDate, imgUrl, duration, mp3Url;
 
     public String getTitle() {
