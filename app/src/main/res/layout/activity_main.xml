@@ -21,7 +21,7 @@
 
     <android.support.v7.widget.RecyclerView
     android:layout_width="match_parent"
-    android:layout_height="440dp"
+    android:layout_height="400dp"
     android:scrollbars="vertical"
     android:id="@+id/list_recycler_view">
 
@@ -30,11 +30,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:id="@+id/pause_btn"
     android:src="@drawable/ic_play_circle_outline_black_18dp"/>
 <MediaController
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/media_control">
+    android:layout_height="20dp"
+    android:id="@+id/media_control"
+    android:scrollIndicators="start">
 
 </MediaController>
 </LinearLayout>
