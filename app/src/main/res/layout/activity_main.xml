@@ -20,21 +20,24 @@
         app:theme="@style/ThemeOverlay.AppCompat.Dark"/>
 
     <android.support.v7.widget.RecyclerView
-    android:layout_width="match_parent"
-    android:layout_height="440dp"
-    android:scrollbars="vertical"
-    android:id="@+id/list_recycler_view">
+        android:layout_width="match_parent"
+        android:layout_height="440dp"
+        android:scrollbars="vertical"
+        android:id="@+id/list_recycler_view"
+        android:clickable="true"
+        android:longClickable="true">
 
-</android.support.v7.widget.RecyclerView>
-<ImageButton
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:src="@drawable/ic_play_circle_outline_black_18dp"/>
-<MediaController
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/media_control">
+    </android.support.v7.widget.RecyclerView>
 
-</MediaController>
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_play_circle_outline_black_18dp"/>
+    <MediaController
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/media_control">
+
+    </MediaController>
 </LinearLayout>
