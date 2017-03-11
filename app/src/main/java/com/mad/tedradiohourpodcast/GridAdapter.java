@@ -119,6 +119,7 @@ public class GridAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     public void onBindViewHolder(ListAdapter.ViewHolder holder, final int position) {
         TextView tv = (TextView) holder.view.findViewById(R.id.tv_title_grid);
         ImageView iv = (ImageView) holder.view.findViewById(R.id.iv_image_grid);
+        ImageButton btnPlay = (ImageButton) holder.view.findViewById(R.id.btn_play);
         tv.setText(itunesList.get(position).getTitle());
         Picasso.with(mContext).load(itunesList.get(position).getImgUrl()).into(iv);
 
@@ -132,7 +133,7 @@ public class GridAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
             }
         });
 
-        iv.setOnClickListener(new View.OnClickListener() {
+        btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(flagPlay) {
