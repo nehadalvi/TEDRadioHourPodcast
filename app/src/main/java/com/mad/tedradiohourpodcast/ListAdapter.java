@@ -113,7 +113,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v =  LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_layout, parent, false);
-        // set the view's size, margins, paddings and layout parameters
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -143,6 +142,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
                 //display(position);
 
                 if(flagPlay) {
+                    pauseButton.setBackgroundResource(R.drawable.ic_pause_black_24dp);
                     mPlayer = new MediaPlayer();
                     mController.show();
                     mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -176,10 +176,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
             @Override
             public void onClick(View v) {
                 if(!flagPause) {
+                    pauseButton.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
                     pause();
                     flagPause = true;
                     flagPlay = true;
                 } else{
+                    pauseButton.setBackgroundResource(R.drawable.ic_pause_black_24dp);
                     start();
                     flagPause = false;
                     flagPlay = false;
