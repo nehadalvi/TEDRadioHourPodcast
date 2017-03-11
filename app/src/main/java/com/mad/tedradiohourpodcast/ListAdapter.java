@@ -1,6 +1,7 @@
 package com.mad.tedradiohourpodcast;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
@@ -127,7 +128,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         tv.setText(itunesList.get(position).getTitle()+"\n"+"Posted: "+itunesList.get(position).getDate());
         Picasso.with(mContext).load(itunesList.get(position).getImgUrl()).into(iv);
 
-
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext, "View clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext,PlayActivity.class);
+                intent.putExtra("tune",itunesList.get(position));
+                mContext.startActivity(intent);
+            }
+        });
 
         holder.view.findViewById(R.id.iv_play_button).setOnClickListener(new View.OnClickListener() {
             @Override
