@@ -1,5 +1,6 @@
 package com.mad.tedradiohourpodcast;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.MediaController;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements GetTunesAsync.IGetData{
     String url;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements GetTunesAsync.IGe
     ArrayList<Itunes> tunesList;
     MediaController mController;
     ImageButton imageButton;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,11 @@ public class MainActivity extends AppCompatActivity implements GetTunesAsync.IGe
         mController = (MediaController) findViewById(R.id.media_control);
         imageButton = (ImageButton) findViewById(R.id.pause_btn);
         url = "https://www.npr.org/rss/podcast.php?id=510298";
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading Episodes...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         new GetTunesAsync(this).execute(url);
 
@@ -45,7 +53,9 @@ public class MainActivity extends AppCompatActivity implements GetTunesAsync.IGe
     @Override
     public void getData(ArrayList<Itunes> itunes) {
         Log.d("demo","Arraylist = "+itunes.toString());
+        Collections.sort(itunes,Itunes.dateComparator);
         tunesList = itunes;
+        progressDialog.dismiss();
         listView = (RecyclerView) findViewById(R.id.list_recycler_view);
         RecyclerView.Adapter adapter = new ListAdapter(tunesList,this,mController,imageButton);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
