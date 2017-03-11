@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
+import android.widget.SeekBar;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements GetTunesAsync.IGe
     MediaController mController;
     ImageButton imageButton;
     ProgressDialog progressDialog;
-
+    SeekBar seekBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements GetTunesAsync.IGe
         getSupportActionBar().setIcon(R.drawable.ted);
         mController = (MediaController) findViewById(R.id.media_control);
         imageButton = (ImageButton) findViewById(R.id.pause_btn);
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
+
         url = "https://www.npr.org/rss/podcast.php?id=510298";
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading Episodes...");
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements GetTunesAsync.IGe
         tunesList = itunes;
         progressDialog.dismiss();
         listView = (RecyclerView) findViewById(R.id.list_recycler_view);
-        RecyclerView.Adapter adapter = new ListAdapter(tunesList,this,mController,imageButton);
+        RecyclerView.Adapter adapter = new ListAdapter(tunesList,this,seekBar,imageButton);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         listView.setLayoutManager(layoutManager);
         listView.setAdapter(adapter);
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements GetTunesAsync.IGe
                 flagList = false;
             } else{
                 listView = (RecyclerView) findViewById(R.id.list_recycler_view);
-                RecyclerView.Adapter adapter = new ListAdapter(tunesList,this,mController,imageButton);
+                RecyclerView.Adapter adapter = new ListAdapter(tunesList,this,seekBar,imageButton);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
                 listView.setLayoutManager(layoutManager);
                 listView.setAdapter(adapter);

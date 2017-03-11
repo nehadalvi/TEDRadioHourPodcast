@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +27,7 @@ import java.util.ArrayList;
  * Created by neha5 on 09-03-2017.
  */
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> implements MediaController.MediaPlayerControl {
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> implements MediaController.MediaPlayerControl, SeekBar.OnSeekBarChangeListener {
     ArrayList<Itunes> itunesList;
     Context mContext;
     MediaPlayer mPlayer;
@@ -33,12 +35,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     boolean flagPause = false;
     MediaController mController;
     ImageButton pauseButton;
+    SeekBar seekBar;
 
 
-    public ListAdapter(ArrayList<Itunes> itunesList, Context context, MediaController mediaController, ImageButton pauseButton) {
+    public ListAdapter(ArrayList<Itunes> itunesList, Context context, SeekBar seekBar, ImageButton pauseButton) {
         this.itunesList = itunesList;
         mContext = context;
-        mController = mediaController;
+        this.seekBar = seekBar;
         this.pauseButton = pauseButton;
     }
 
@@ -97,6 +100,21 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         return 0;
     }
 
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        if(fromUser)
+            seekTo(progress);
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
+    }
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -140,11 +158,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
             @Override
             public void onClick(View view) {
                 //display(position);
+                Log.d("demo","visible seekbar");
+                seekBar.setVisibility(View.VISIBLE);
+                int total;
+                int currentPosition=0;
 
                 if(flagPlay) {
                     pauseButton.setBackgroundResource(R.drawable.ic_pause_black_24dp);
                     mPlayer = new MediaPlayer();
-                    mController.show();
+                    //mController.show();
                     mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                     try {
                         mPlayer.setDataSource(itunesList.get(position).getMp3Url());
@@ -165,6 +187,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
                         Toast.makeText(mContext, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
                     }
                     mPlayer.start();
+                    total = Integer.parseInt(itunesList.get(position).getDuration());
+                    seekBar.setMax(total);
+                    while(mPlayer!=null && currentPosition<total) {
+                        currentPosition = getCurrentPosition()/1000;
+                        seekBar.setProgress(currentPosition);
+                        Log.d("demo",currentPosition+"");
+                    }
                     flagPlay = false;
                 }
 
