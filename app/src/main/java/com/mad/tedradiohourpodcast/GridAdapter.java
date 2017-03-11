@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,15 +23,75 @@ import java.util.ArrayList;
  * Created by Chinmay Rawool on 3/10/2017.
  */
 
-public class GridAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+public class GridAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> implements MediaController.MediaPlayerControl{
     ArrayList<Itunes> itunesList;
     Context mContext;
     MediaPlayer mPlayer;
     boolean flagPlay = true;
+    boolean flagPause = false;
+    MediaController mController;
+    ImageButton pauseButton;
 
-    public GridAdapter(ArrayList<Itunes> itunesList, Context context) {
+    public GridAdapter(ArrayList<Itunes> itunesList, Context context, MediaController mediaController, ImageButton pauseButton) {
         this.itunesList = itunesList;
         mContext = context;
+        mController = mediaController;
+        this.pauseButton = pauseButton;
+    }
+
+    @Override
+    public void start() {
+        mPlayer.start();
+    }
+
+    @Override
+    public void pause() {
+        mPlayer.pause();
+    }
+
+    @Override
+    public int getDuration() {
+        return mPlayer.getDuration();
+    }
+
+    @Override
+    public int getCurrentPosition() {
+        return mPlayer.getCurrentPosition();
+    }
+
+    @Override
+    public void seekTo(int pos) {
+        mPlayer.seekTo(pos);
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return mPlayer.isPlaying();
+    }
+
+    @Override
+    public int getBufferPercentage() {
+        return 0;
+    }
+
+    @Override
+    public boolean canPause() {
+        return true;
+    }
+
+    @Override
+    public boolean canSeekBackward() {
+        return true;
+    }
+
+    @Override
+    public boolean canSeekForward() {
+        return true;
+    }
+
+    @Override
+    public int getAudioSessionId() {
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -75,6 +137,7 @@ public class GridAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             public void onClick(View view) {
                 if(flagPlay) {
                     mPlayer = new MediaPlayer();
+                    mController.show();
                     mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                     try {
                         mPlayer.setDataSource(itunesList.get(position).getMp3Url());
@@ -95,6 +158,21 @@ public class GridAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                         Toast.makeText(mContext, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
                     }
                     mPlayer.start();
+                    flagPlay = false;
+                }
+            }
+        });
+
+        pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!flagPause) {
+                    pause();
+                    flagPause = true;
+                    flagPlay = true;
+                } else{
+                    start();
+                    flagPause = false;
                     flagPlay = false;
                 }
             }

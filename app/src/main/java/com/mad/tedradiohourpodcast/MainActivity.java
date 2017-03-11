@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements GetTunesAsync.IGe
         if(item.getItemId()==R.id.action_switch){
             if(flagList){
                 listView = (RecyclerView) findViewById(R.id.list_recycler_view);
-                RecyclerView.Adapter adapter = new GridAdapter(tunesList,this);
+                RecyclerView.Adapter adapter = new GridAdapter(tunesList,this,mController,imageButton);
                 RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,2);
                 listView.setLayoutManager(layoutManager);
                 listView.setAdapter(adapter);

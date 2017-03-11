@@ -29,7 +29,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     ArrayList<Itunes> itunesList;
     Context mContext;
     MediaPlayer mPlayer;
-    LinearLayout linear;
     boolean flagPlay = true;
     boolean flagPause = false;
     MediaController mController;
