@@ -87,7 +87,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 //display(position);
-                MainActivity.pressedNewPlay = true;
+
                 Log.d("demo","Pressed"+MainActivity.pressedNewPlay);
                 Log.d("demo","visible seekbar");
                 seekBar.setVisibility(View.VISIBLE);
@@ -96,7 +96,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 //int currentPosition=0;
 
                 if(MainActivity.flagPlay) {
-
+                    MainActivity.pressedNewPlay = true;
                     Log.d("demo","Pressed play button");
                     Log.d("demo","Duration:"+itunesList.get(position).getDuration());
                     total = Integer.parseInt(itunesList.get(position).getDuration());
