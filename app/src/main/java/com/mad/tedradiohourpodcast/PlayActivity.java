@@ -16,6 +16,7 @@ public class PlayActivity extends AppCompatActivity {
     int total;
     SeekBar seekBar;
     MediaAsyncTask mediaAsyncTask=null;
+    public static boolean pressedBack = false;
 
     @Override
     protected void onDestroy() {
@@ -23,7 +24,8 @@ public class PlayActivity extends AppCompatActivity {
         super.onDestroy();
         if(mediaAsyncTask!=null){
             mediaAsyncTask.stop();
-            mediaAsyncTask.cancel(true);
+            //mediaAsyncTask.cancel(true);
+            pressedBack = true;
         }
     }
 
@@ -53,6 +55,8 @@ public class PlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(MainActivity.flagPlay){
+                    pressedBack = false;
+                    Log.d("demo","flagPlay ="+MainActivity.flagPlay);
                     imageButton.setBackgroundResource(R.drawable.ic_pause_black_24dp);
                     total = Integer.parseInt(itunes.getDuration());
                     seekBar.setMax(total);

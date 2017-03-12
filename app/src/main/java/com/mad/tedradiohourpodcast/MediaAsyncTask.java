@@ -69,6 +69,11 @@ public class MediaAsyncTask extends AsyncTask<String,Integer,Void> {
                 //ListAdapter.flagPlay = false;
                 return null;
             }
+            if(PlayActivity.pressedBack){
+
+                Log.d("demo","Back ="+PlayActivity.pressedBack);
+                return null;
+            }
 
         }
         Log.d("demo","While done"+"");
