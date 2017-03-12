@@ -81,12 +81,12 @@ public class Itunes implements Serializable {
     public static Comparator<Itunes> dateComparator = new Comparator<Itunes>() {
         @Override
         public int compare(Itunes o1, Itunes o2) {
-            DateFormat df = new SimpleDateFormat("E, MMM dd yyyy");
+            DateFormat df = new SimpleDateFormat("E, dd MMM yyyy");
             Date d1 = null, d2 = null;
             try {
                 d1 = df.parse(o1.getDate());
                 d2 = df.parse(o2.getDate());
-                return d1.compareTo(d2);
+                return -1*d1.compareTo(d2);
             } catch (ParseException e) {
                 e.printStackTrace();
             }

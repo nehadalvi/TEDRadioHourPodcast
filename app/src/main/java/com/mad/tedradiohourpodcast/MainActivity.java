@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements GetTunesAsync.IGe
     @Override
     public void getData(ArrayList<Itunes> itunes) {
         Log.d("demo","Arraylist = "+itunes.toString());
-        //Collections.sort(itunes,Itunes.dateComparator);
+        Collections.sort(itunes,Itunes.dateComparator);
         tunesList = itunes;
         progressDialog.dismiss();
         listView = (RecyclerView) findViewById(R.id.list_recycler_view);
