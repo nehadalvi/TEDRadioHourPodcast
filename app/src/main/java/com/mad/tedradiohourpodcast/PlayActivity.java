@@ -12,11 +12,18 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class PlayActivity extends AppCompatActivity {
     int total;
     SeekBar seekBar;
     MediaAsyncTask mediaAsyncTask=null;
     public static boolean pressedBack = false;
+    Date d=null;
+    String formattedDate;
 
     @Override
     protected void onDestroy() {
@@ -38,6 +45,16 @@ public class PlayActivity extends AppCompatActivity {
         MainActivity.pressedNewPlay = false;
 
         final Itunes itunes = (Itunes) getIntent().getExtras().getSerializable("tune");
+        DateFormat originalFormat = new SimpleDateFormat("E, dd MMM yyyy");
+        DateFormat targetFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+        try {
+            d = originalFormat.parse(itunes.getDate());
+            formattedDate = targetFormat.format(d);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         TextView tv = (TextView) findViewById(R.id.tv_title);
         tv.setText(itunes.getTitle());
         ImageView iv = (ImageView) findViewById(R.id.imageView);
@@ -45,7 +62,9 @@ public class PlayActivity extends AppCompatActivity {
         tv = (TextView) findViewById(R.id.tv_description);
         tv.setText("Description: "+ itunes.getDescription());
         tv = (TextView) findViewById(R.id.tv_date);
-        tv.setText("Published Date:" +itunes.getDate());
+        if(d!=null) {
+            tv.setText("Publication Date: " +formattedDate);
+        }
         tv = (TextView) findViewById(R.id.tv_duration);
         tv.setText("Duration: " +itunes.getDuration());
 
