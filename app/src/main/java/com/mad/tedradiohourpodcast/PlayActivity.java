@@ -3,8 +3,10 @@ package com.mad.tedradiohourpodcast;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -29,7 +31,13 @@ public class PlayActivity extends AppCompatActivity {
         tv = (TextView) findViewById(R.id.tv_duration);
         tv.setText("Duration: " +itunes.getDuration());
 
+        SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar_playAct);
+        ImageButton imageButton = (ImageButton) findViewById(R.id.pause_btn_playAct);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        ImageButton playButton = (ImageButton) findViewById(R.id.pause_btn_playAct);
+            }
+        });
     }
 }
