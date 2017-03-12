@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements GetTunesAsync.IGe
     ImageButton imageButton;
     ProgressDialog progressDialog;
     SeekBar seekBar;
+    public static boolean flagPlay = true;
+    public static boolean pressedNewPlay = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

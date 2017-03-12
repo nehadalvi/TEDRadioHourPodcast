@@ -64,7 +64,7 @@ public class MediaAsyncTask extends AsyncTask<String,Integer,Void> {
             //Log.d("demo",current+"");
             //Log.d("demo","flagPlay"+ListAdapter.flagPlay);
             //Log.d("demo","Pressed"+ListAdapter.pressedNewPlay);
-            if(ListAdapter.flagPlay && ListAdapter.pressedNewPlay){
+            if(MainActivity.flagPlay && MainActivity.pressedNewPlay){
                 Log.d("demo","do exit"+"");
                 //ListAdapter.flagPlay = false;
                 return null;
@@ -79,8 +79,8 @@ public class MediaAsyncTask extends AsyncTask<String,Integer,Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         Log.d("demo","OnPRe");
-        ListAdapter.pressedNewPlay=false;
-        Log.d("demo","Pressed"+ListAdapter.pressedNewPlay);
+        MainActivity.pressedNewPlay=false;
+        Log.d("demo","Pressed"+MainActivity.pressedNewPlay);
         seekBar.setVisibility(View.VISIBLE);
         pause.setVisibility(View.VISIBLE);
     }
@@ -89,14 +89,14 @@ public class MediaAsyncTask extends AsyncTask<String,Integer,Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         Log.d("demo","OnPost");
-        ListAdapter.pressedNewPlay=false;
-        Log.d("demo","Pressed"+ListAdapter.pressedNewPlay);
+        MainActivity.pressedNewPlay=false;
+        Log.d("demo","Pressed"+MainActivity.pressedNewPlay);
         if(current==duration) {
             seekBar.setVisibility(View.INVISIBLE);
             pause.setVisibility(View.INVISIBLE);
         }
         mPlayer.pause();
-        ListAdapter.flagPlay = true;
+        MainActivity.flagPlay = true;
     }
 
     @Override
@@ -114,14 +114,14 @@ public class MediaAsyncTask extends AsyncTask<String,Integer,Void> {
                     pause.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
                     mPlayer.pause();
                     flag = false;
-                    ListAdapter.flagPlay = true;
+                    MainActivity.flagPlay = true;
                     //ListAdapter.pressedNewPlay = true;
                 } else{
                     Log.d("demo","flag"+flag);
                     pause.setBackgroundResource(R.drawable.ic_pause_black_24dp);
                     mPlayer.start();
                     flag =true;
-                    ListAdapter.flagPlay = false;
+                    MainActivity.flagPlay = false;
                 }
             }
         });

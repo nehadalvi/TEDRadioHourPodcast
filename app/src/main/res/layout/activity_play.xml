@@ -51,12 +51,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/pause_btn_playAct"
-        android:visibility="invisible"/>
+        android:background="@drawable/ic_play_arrow_black_24dp"/>
 
 
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/seekBar_playAct"
-        android:visibility="invisible"/>
+        android:id="@+id/seekBar_playAct" />
 </LinearLayout>

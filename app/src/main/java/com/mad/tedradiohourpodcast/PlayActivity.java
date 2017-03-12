@@ -15,7 +15,8 @@ public class PlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-
+        MainActivity.flagPlay = true;
+        MainActivity.pressedNewPlay = false;
         Itunes itunes = (Itunes) getIntent().getExtras().getSerializable("tune");
         TextView tv = (TextView) findViewById(R.id.tv_title);
         tv.setText(itunes.getTitle());

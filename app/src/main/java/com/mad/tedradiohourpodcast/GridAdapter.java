@@ -28,8 +28,7 @@ import java.util.ArrayList;
 public class GridAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     ArrayList<Itunes> itunesList;
     Context mContext;
-    public static boolean flagPlay = true;
-    public static boolean pressedNewPlay = false;
+
     boolean flagPause = false;
     ImageButton pauseButton;
     SeekBar seekBar;
@@ -40,6 +39,8 @@ public class GridAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         mContext = context;
         this.seekBar = seekBar;
         this.pauseButton = pauseButton;
+        MainActivity.flagPlay = true;
+        MainActivity.pressedNewPlay = false;
     }
 
 
@@ -86,18 +87,18 @@ public class GridAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 //display(position);
-                pressedNewPlay = true;
+                MainActivity.pressedNewPlay = true;
+                Log.d("demo","Pressed"+MainActivity.pressedNewPlay);
                 Log.d("demo","visible seekbar");
                 seekBar.setVisibility(View.VISIBLE);
                 pauseButton.setVisibility(View.VISIBLE);
                 int total;
                 //int currentPosition=0;
 
-                if(flagPlay) {
-                    if (mediaAsyncTask!=null){
-                        mediaAsyncTask.cancel(true);
-                    }
+                if(MainActivity.flagPlay) {
+
                     Log.d("demo","Pressed play button");
+                    Log.d("demo","Duration:"+itunesList.get(position).getDuration());
                     total = Integer.parseInt(itunesList.get(position).getDuration());
                     pauseButton.setBackgroundResource(R.drawable.ic_pause_black_24dp);
                     seekBar.setMax(total);
@@ -105,7 +106,7 @@ public class GridAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                     Log.d("demo",itunesList.get(position).getMp3Url()+"");
                     mediaAsyncTask.execute(itunesList.get(position).getMp3Url());
                     Log.d("demo","position"+position+"");
-                    flagPlay = false;
+                    MainActivity.flagPlay = false;
                 }
 
 
