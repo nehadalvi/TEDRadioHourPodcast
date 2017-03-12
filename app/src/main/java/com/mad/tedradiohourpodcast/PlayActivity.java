@@ -21,7 +21,10 @@ public class PlayActivity extends AppCompatActivity {
     protected void onDestroy() {
 
         super.onDestroy();
-
+        if(mediaAsyncTask!=null){
+            mediaAsyncTask.stop();
+            mediaAsyncTask.cancel(true);
+        }
     }
 
     @Override

@@ -127,6 +127,8 @@ public class MediaAsyncTask extends AsyncTask<String,Integer,Void> {
         });
     }
 
-
+    void stop(){
+        mPlayer.stop();
+    }
 
 }

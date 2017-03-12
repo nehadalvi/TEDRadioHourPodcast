@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements GetTunesAsync.IGe
     SeekBar seekBar;
     public static boolean flagPlay = true;
     public static boolean pressedNewPlay = false;
+    RecyclerView.Adapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements GetTunesAsync.IGe
         setSupportActionBar(itunesToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ted);
-        mController = (MediaController) findViewById(R.id.media_control);
         imageButton = (ImageButton) findViewById(R.id.pause_btn);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
 
@@ -56,13 +56,19 @@ public class MainActivity extends AppCompatActivity implements GetTunesAsync.IGe
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
+
+    @Override
     public void getData(ArrayList<Itunes> itunes) {
         Log.d("demo","Arraylist = "+itunes.toString());
         //Collections.sort(itunes,Itunes.dateComparator);
         tunesList = itunes;
         progressDialog.dismiss();
         listView = (RecyclerView) findViewById(R.id.list_recycler_view);
-        RecyclerView.Adapter adapter = new ListAdapter(tunesList,this,seekBar,imageButton);
+        adapter = new ListAdapter(tunesList,this,seekBar,imageButton);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         listView.setLayoutManager(layoutManager);
         listView.setAdapter(adapter);

@@ -126,4 +126,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     void display(int i){
         Toast.makeText(mContext,"Play button clicked : "+i, Toast.LENGTH_SHORT).show();
     }
+
+    public void stop(){
+        if(mediaAsyncTask!=null) {
+            mediaAsyncTask.stop();
+        }
+    }
 }
