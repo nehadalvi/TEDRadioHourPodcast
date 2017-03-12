@@ -3,6 +3,7 @@ package com.mad.tedradiohourpodcast;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,5 +27,8 @@ public class PlayActivity extends AppCompatActivity {
         tv.setText("Published Date:" +itunes.getDate());
         tv = (TextView) findViewById(R.id.tv_duration);
         tv.setText("Duration: " +itunes.getDuration());
+
+
+        ImageButton playButton = (ImageButton) findViewById(R.id.pause_btn_playAct);
     }
 }

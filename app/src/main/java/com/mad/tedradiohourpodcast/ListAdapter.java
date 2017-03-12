@@ -27,93 +27,21 @@ import java.util.ArrayList;
  * Created by neha5 on 09-03-2017.
  */
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> implements MediaController.MediaPlayerControl, SeekBar.OnSeekBarChangeListener {
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     ArrayList<Itunes> itunesList;
     Context mContext;
-    MediaPlayer mPlayer;
-    boolean flagPlay = true;
+    public static boolean flagPlay = true;
+    public static boolean pressedNewPlay = false;
     boolean flagPause = false;
-    MediaController mController;
     ImageButton pauseButton;
     SeekBar seekBar;
-
+    MediaAsyncTask mediaAsyncTask=null;
 
     public ListAdapter(ArrayList<Itunes> itunesList, Context context, SeekBar seekBar, ImageButton pauseButton) {
         this.itunesList = itunesList;
         mContext = context;
         this.seekBar = seekBar;
         this.pauseButton = pauseButton;
-    }
-
-    @Override
-    public void start() {
-        mPlayer.start();
-    }
-
-    @Override
-    public void pause() {
-        mPlayer.pause();
-    }
-
-    @Override
-    public int getDuration() {
-        return mPlayer.getDuration();
-    }
-
-    @Override
-    public int getCurrentPosition() {
-        return mPlayer.getCurrentPosition();
-    }
-
-    @Override
-    public void seekTo(int pos) {
-        mPlayer.seekTo(pos);
-    }
-
-    @Override
-    public boolean isPlaying() {
-        return mPlayer.isPlaying();
-    }
-
-    @Override
-    public int getBufferPercentage() {
-        return 0;
-    }
-
-    @Override
-    public boolean canPause() {
-        return true;
-    }
-
-    @Override
-    public boolean canSeekBackward() {
-        return true;
-    }
-
-    @Override
-    public boolean canSeekForward() {
-        return true;
-    }
-
-    @Override
-    public int getAudioSessionId() {
-        return 0;
-    }
-
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if(fromUser)
-            seekTo(progress);
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-
     }
 
 
@@ -158,65 +86,33 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
             @Override
             public void onClick(View view) {
                 //display(position);
+                pressedNewPlay = true;
+                Log.d("demo","Pressed"+pressedNewPlay);
                 Log.d("demo","visible seekbar");
                 seekBar.setVisibility(View.VISIBLE);
+                pauseButton.setVisibility(View.VISIBLE);
                 int total;
-                int currentPosition=0;
+                //int currentPosition=0;
 
                 if(flagPlay) {
-                    pauseButton.setBackgroundResource(R.drawable.ic_pause_black_24dp);
-                    mPlayer = new MediaPlayer();
-                    //mController.show();
-                    mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    try {
-                        mPlayer.setDataSource(itunesList.get(position).getMp3Url());
-                    } catch (IllegalArgumentException e) {
-                        Toast.makeText(mContext, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-                    } catch (SecurityException e) {
-                        Toast.makeText(mContext, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-                    } catch (IllegalStateException e) {
-                        Toast.makeText(mContext, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        mPlayer.prepare();
-                    } catch (IllegalStateException e) {
-                        Toast.makeText(mContext, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-                    } catch (IOException e) {
-                        Toast.makeText(mContext, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-                    }
-                    mPlayer.start();
+
+                    Log.d("demo","Pressed play button");
+                    Log.d("demo","Duration:"+itunesList.get(position).getDuration());
                     total = Integer.parseInt(itunesList.get(position).getDuration());
-                    seekBar.setMax(total);
-                    while(mPlayer!=null && currentPosition<total) {
-                        currentPosition = getCurrentPosition()/1000;
-                        seekBar.setProgress(currentPosition);
-                        Log.d("demo",currentPosition+"");
-                    }
-                    flagPlay = false;
-                }
-
-
-            }
-        });
-
-        pauseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!flagPause) {
-                    pauseButton.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
-                    pause();
-                    flagPause = true;
-                    flagPlay = true;
-                } else{
                     pauseButton.setBackgroundResource(R.drawable.ic_pause_black_24dp);
-                    start();
-                    flagPause = false;
+                    seekBar.setMax(total);
+                    mediaAsyncTask = (MediaAsyncTask) new MediaAsyncTask(seekBar,total,pauseButton);
+                    Log.d("demo",itunesList.get(position).getMp3Url()+"");
+                    mediaAsyncTask.execute(itunesList.get(position).getMp3Url());
+                    Log.d("demo","position"+position+"");
                     flagPlay = false;
                 }
+
+
             }
         });
+
+
 
     }
 
