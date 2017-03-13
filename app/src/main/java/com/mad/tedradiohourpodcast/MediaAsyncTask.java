@@ -33,7 +33,7 @@ public class MediaAsyncTask extends AsyncTask<String,Integer,Void> {
     }
     @Override
     protected Void doInBackground(String... strings) {
-        mPlayer = new MediaPlayer();
+
         Log.d("demo","media player created");
         //mController.show();
         mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -88,6 +88,7 @@ public class MediaAsyncTask extends AsyncTask<String,Integer,Void> {
         Log.d("demo","Pressed"+MainActivity.pressedNewPlay);
         seekBar.setVisibility(View.VISIBLE);
         pause.setVisibility(View.VISIBLE);
+        mPlayer = new MediaPlayer();
     }
 
     @Override
@@ -102,6 +103,8 @@ public class MediaAsyncTask extends AsyncTask<String,Integer,Void> {
         }
         mPlayer.pause();
         MainActivity.flagPlay = true;
+        PlayActivity.pressedBack = false;
+
     }
 
     @Override
@@ -120,13 +123,14 @@ public class MediaAsyncTask extends AsyncTask<String,Integer,Void> {
                     mPlayer.pause();
                     flag = false;
                     MainActivity.flagPlay = true;
-                    //ListAdapter.pressedNewPlay = true;
+                    MainActivity.pressedNewPlay = true;
                 } else{
                     Log.d("demo","flag"+flag);
                     pause.setBackgroundResource(R.drawable.ic_pause_black_24dp);
                     mPlayer.start();
                     flag =true;
                     MainActivity.flagPlay = false;
+                    MainActivity.pressedNewPlay = false;
                 }
             }
         });

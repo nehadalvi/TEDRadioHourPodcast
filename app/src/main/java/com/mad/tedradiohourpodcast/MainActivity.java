@@ -1,3 +1,14 @@
+/*
+* Homework 07
+* Name: Chinmay Rawool
+*       Neha Dalvi
+*
+* Group no 3
+*
+* Assumption: Seekbar used for progress. Won't allow to play new podcast unless previous running podcast is paused.
+* */
+
+
 package com.mad.tedradiohourpodcast;
 
 import android.app.ProgressDialog;
@@ -26,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements GetTunesAsync.IGe
     RecyclerView listView;
     boolean flagList = true;
     ArrayList<Itunes> tunesList;
-    MediaController mController;
+    //MediaController mController;
     ImageButton imageButton;
     ProgressDialog progressDialog;
     SeekBar seekBar;

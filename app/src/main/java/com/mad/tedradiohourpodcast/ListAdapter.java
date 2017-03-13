@@ -79,6 +79,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 Toast.makeText(mContext, "View clicked", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext,PlayActivity.class);
                 intent.putExtra("tune",itunesList.get(position));
+                try {
+                    mediaAsyncTask.stop();
+                    MainActivity.flagPlay = true;
+                    PlayActivity.pressedBack = true;
+                }catch(NullPointerException e){
+                    e.printStackTrace();
+                }
                 mContext.startActivity(intent);
             }
         });

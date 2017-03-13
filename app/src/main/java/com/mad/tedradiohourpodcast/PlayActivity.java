@@ -36,6 +36,8 @@ public class PlayActivity extends AppCompatActivity {
             mediaAsyncTask.stop();
             //mediaAsyncTask.cancel(true);
             pressedBack = true;
+            MainActivity.flagPlay = true;
+            MainActivity.pressedNewPlay = true;
         }
     }
 
@@ -50,6 +52,7 @@ public class PlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+        pressedBack = false;
         Toolbar itunesToolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(itunesToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -96,6 +99,14 @@ public class PlayActivity extends AppCompatActivity {
                     mediaAsyncTask.execute(itunes.getMp3Url());
                     //Log.d("demo","position"+position+"");
                     MainActivity.flagPlay = false;
+                }else{
+                    imageButton.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
+                    try {
+                        mediaAsyncTask.stop();
+                    }catch(NullPointerException e){
+                        e.printStackTrace();
+                    }
+                    MainActivity.flagPlay = true;
                 }
             }
         });
